@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:paikarilimited_quicktech/Controllers/productdetailscontroller.dart';
 import 'package:paikarilimited_quicktech/Fixed%20Variables/fixedvariables.dart';
@@ -14,7 +16,10 @@ import 'package:http/http.dart' as http;
 import 'package:paikarilimited_quicktech/main.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({Key? key}) : super(key: key);
+  //
+  String id;
+  // const ProductDetailsScreen({required this.id, Key? key}) : super(key: key);
+  ProductDetailsScreen({required this.id});
 
   @override
   _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
@@ -34,7 +39,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       drawer: Sidenav(size),
       body: SingleChildScrollView(
           child: FutureBuilder<ProductDetails>(
-              future: GetDetails("10"),
+              future: GetDetails(widget.id),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Column(
@@ -43,7 +48,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       SizedBox(
                           width: double.infinity,
                           height: size.height * 40,
-                          child: Image(
+                          child: const Image(
                             image: NetworkImage(
                               // snapshot.data!.images![0].toString(),
                               "https://teamphotousa.com/assets/images/teamphoto-loading.gif",
@@ -73,7 +78,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                                 whitespace(context, 2, 0),
                                 Text(
-                                  snapshot.data!.regularPrice.toString(),
+                                  "old Price  " +
+                                      snapshot.data!.regularPrice.toString(),
                                   style: const TextStyle(
                                     color: Colors.white54,
                                     // fontSize: 18,
@@ -81,7 +87,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   ),
                                 ),
                                 Text(
-                                  snapshot.data!.price.toString(),
+                                  "Price  " + snapshot.data!.price.toString(),
                                   style: GoogleFonts.openSans(
                                     color: redcolor,
                                     fontWeight: FontWeight.w700,
@@ -106,15 +112,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       whitespace(context, 2, 0),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: Text(
-                          snapshot.data!.description.toString(),
-                          // productdetailscontroller
-                          //     .productdetails.value.description
-                          //     .toString(),
-                          style: GoogleFonts.openSans(
-                              textStyle: const TextStyle(
-                            color: Colors.white70,
-                          )),
+                        child: Html(
+                          data: snapshot.data!.description.toString(),
+                          style: {
+                            "body": Style(
+                              color: Colors.white,
+                            )
+                          },
+
+                          // Text(
+                          //   snapshot.data!.description.toString(),
+                          //   // productdetailscontroller
+                          //   //     .productdetails.value.description
+                          //   //     .toString(),
+                          //   style: GoogleFonts.openSans(
+                          //       textStyle: const TextStyle(
+                          //     color: Colors.white70,
+                          //   )),
+                          // ),
                         ),
                       )
                     ],
@@ -137,7 +152,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     String basicAuth = 'Basic ' +
         base64Encode(utf8.encode('$woocommerceusername:$woocommercepassword'));
     final response = await http.get(
-        Uri.parse('https://paikarilimited.com/wp-json/wc/v3/products/6293'),
+        Uri.parse('https://paikarilimited.com/wp-json/wc/v3/products/' + id),
         headers: <String, String>{'authorization': basicAuth});
 
     var data = jsonDecode(response.body.toString());
