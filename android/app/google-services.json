@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "488249240417",
+    "project_id": "paikarilimited-bfc0f",
+    "storage_bucket": "paikarilimited-bfc0f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488249240417:android:ffbdb98f3d63eba3343320",
+        "android_client_info": {
+          "package_name": "com.example.paikarilimited_quicktech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488249240417-6p5esqcouqf73f2co3k38o9fr10691ss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFckCm9xjht7wDrt1gqEdB9jFKvlQeLnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488249240417-6p5esqcouqf73f2co3k38o9fr10691ss.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
