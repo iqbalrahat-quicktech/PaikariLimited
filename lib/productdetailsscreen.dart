@@ -45,9 +45,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           height: size.height * 40,
                           child: Image(
                             image: NetworkImage(
-                                snapshot.data!.images![0].src.toString()
-                                // "https://previews.123rf.com/images/stable/stable1309/stable130900048/22291995-dozen-of-eggs-in-carton.jpg",
-                                ),
+                              // snapshot.data!.images![0].toString(),
+                              "https://teamphotousa.com/assets/images/teamphoto-loading.gif",
+                            ),
                             fit: BoxFit.cover,
                           )),
                       Row(
@@ -58,14 +58,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(snapshot.data!.name.toString(),
-                                    style: GoogleFonts.openSans(
-                                      textStyle: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    )),
+                                SizedBox(
+                                  width: size.width * 70,
+                                  child: Text(snapshot.data!.name.toString(),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: GoogleFonts.openSans(
+                                        textStyle: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      )),
+                                ),
                                 whitespace(context, 2, 0),
                                 Text(
                                   snapshot.data!.regularPrice.toString(),
@@ -132,7 +137,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     String basicAuth = 'Basic ' +
         base64Encode(utf8.encode('$woocommerceusername:$woocommercepassword'));
     final response = await http.get(
-        Uri.parse('https://paikarilimited.com/wp-json/wc/v3/products/6238'),
+        Uri.parse('https://paikarilimited.com/wp-json/wc/v3/products/6293'),
         headers: <String, String>{'authorization': basicAuth});
 
     var data = jsonDecode(response.body.toString());

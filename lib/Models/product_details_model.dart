@@ -104,7 +104,7 @@ class ProductDetails {
   String? priceHtml;
   bool? onSale;
   bool? purchasable;
-  int? totalSales;
+  dynamic? totalSales;
   bool? virtual;
   bool? downloadable;
   List<dynamic>? downloads;
