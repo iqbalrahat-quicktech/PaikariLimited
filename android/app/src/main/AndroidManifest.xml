@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.paikarilimited_quicktech">
    <application
-        android:label="paikarilimited_quicktech"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Paikari Limited"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

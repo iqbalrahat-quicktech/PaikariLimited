@@ -9,17 +9,21 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:paikarilimited_quicktech/Controllers/productdetailscontroller.dart';
 import 'package:paikarilimited_quicktech/Fixed%20Variables/fixedvariables.dart';
+import 'package:paikarilimited_quicktech/Models/cart_model.dart';
 import 'package:paikarilimited_quicktech/Models/product_details_model.dart';
+import 'package:paikarilimited_quicktech/Provider/cartprovider.dart';
 import 'package:paikarilimited_quicktech/commonwidgets.dart';
 import 'package:paikarilimited_quicktech/homescreen.dart';
 import 'package:http/http.dart' as http;
 import 'package:paikarilimited_quicktech/main.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   //
   String id;
+  String url;
   // const ProductDetailsScreen({required this.id, Key? key}) : super(key: key);
-  ProductDetailsScreen({required this.id});
+  ProductDetailsScreen({required this.id, required this.url});
 
   @override
   _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
@@ -48,10 +52,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       SizedBox(
                           width: double.infinity,
                           height: size.height * 40,
-                          child: const Image(
+                          child: Image(
                             image: NetworkImage(
+                              widget.url,
                               // snapshot.data!.images![0].toString(),
-                              "https://teamphotousa.com/assets/images/teamphoto-loading.gif",
+                              // "https://teamphotousa.com/assets/images/teamphoto-loading.gif",
                             ),
                             fit: BoxFit.cover,
                           )),
@@ -101,10 +106,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           // ignore: prefer_const_constructors
                           Padding(
                             padding: const EdgeInsets.only(right: 20),
-                            child: const Icon(
-                              Ionicons.add_circle_outline,
-                              color: Colors.white,
-                              size: 35,
+                            child: GestureDetector(
+                              onTap: () => addtocart(
+                                  int.parse(widget.id),
+                                  snapshot.data?.name,
+                                  int.parse(snapshot.data!.price.toString())),
+                              child: const Icon(
+                                Ionicons.add_circle_outline,
+                                color: Colors.white,
+                                size: 35,
+                              ),
                             ),
                           )
                         ],
@@ -162,5 +173,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     } else {
       return ProductDetails.fromJson(data);
     }
+  }
+
+  addtocart(int productid, String? name, int? productprice) {
+    Provider.of<CartProvider>(context, listen: false).addtocart(CartModel(
+        id: productid, name: name, price: productprice, imageurl: widget.url));
+    print("Added this - $name ");
   }
 }

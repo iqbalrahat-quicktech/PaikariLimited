@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:paikarilimited_quicktech/Boilerplate/boilerplateSearchScreen.dart';
 import 'package:paikarilimited_quicktech/Fixed%20Variables/fixedvariables.dart';
+import 'package:paikarilimited_quicktech/cartscreen.dart';
 
 Widget whitespace(BuildContext context, var thisheight, var thiswidth) {
   Size size = MediaQuery.of(context).size / 100;
@@ -38,10 +41,15 @@ AppBar CommonAppBar(BuildContext context) {
       IconButton(
           icon: const Icon(Icons.shopping_cart),
           color: Colors.white,
-          onPressed: () {}),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const CartScreen()));
+          }),
     ],
   );
 }
+
+TextEditingController searchcontroller = TextEditingController();
 
 // ignore: non_constant_identifier_names
 Widget SearchDialogue(BuildContext context) {
@@ -52,15 +60,22 @@ Widget SearchDialogue(BuildContext context) {
       // width: 200,
       child: Column(
         children: [
-          const TextField(
+          TextField(
+            controller: searchcontroller,
             decoration:
-                InputDecoration(label: Text("Search for products here")),
+                const InputDecoration(label: Text("Search for products here")),
           ),
           whitespace(context, 2, 0),
           SizedBox(
             width: 100,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => BoilerPlateSearchScreen(
+                            searchword: searchcontroller.text)));
+              },
               child: Text(
                 "Search",
                 style: GoogleFonts.openSans(

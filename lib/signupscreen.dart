@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:get/get.dart';
+import 'package:paikarilimited_quicktech/Controllers/authcontroller.dart';
 import 'package:paikarilimited_quicktech/Fixed%20Variables/fixedvariables.dart';
 import 'package:paikarilimited_quicktech/commonwidgets.dart';
 
@@ -15,6 +17,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size / 100;
+    final authController = Get.put(Auth(), permanent: true);
 
     return Scaffold(
       body: Padding(
@@ -41,6 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   whitespace(context, 10, 0),
                   TextFormField(
+                    onChanged: authController.firstname,
                     decoration: const InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
@@ -59,6 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   whitespace(context, 1.1, 0),
                   TextFormField(
+                    onChanged: authController.email,
                     decoration: const InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
@@ -73,6 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   whitespace(context, 1.1, 0),
                   TextFormField(
+                    onChanged: authController.password,
                     decoration: const InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
@@ -89,7 +95,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                       width: double.infinity,
                       child: DarkButtton(
-                          title: "Create Account", onPressed: () {})),
+                          title: "Create Account",
+                          onPressed: () {
+                            authController.signup();
+                          })),
                 ],
               ),
             ),
